@@ -1,6 +1,8 @@
 import pygame
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import *
 from logger import log_state
+from player import Player
+
 
 
 
@@ -15,16 +17,32 @@ def main():
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    running = True
+    clock = pygame.time.Clock()
+    delta_time = 0.1
+
     
+    x = SCREEN_WIDTH / 2
+    y = SCREEN_HEIGHT / 2
+    player = Player(x, y)
     
-    while True:
+
+
+    while running:
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                running = False
 
         screen.fill("black")
+        player.draw(screen)
+        
+
         pygame.display.flip()
+        delta_time = clock.tick(60) / 1000
+        #delta_time = max(0.001, min(0.1, delta_time))
+        
+
 
 
 if __name__ == "__main__":
