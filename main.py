@@ -1,7 +1,7 @@
 import pygame
 from constants import *
 from logger import log_state
-from player import Player
+from player import *
 
 
 
@@ -30,17 +30,19 @@ def main():
 
     while running:
         log_state()
+        x += 50 * delta_time
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+        
         screen.fill("black")
         player.draw(screen)
-        
+        player.update(delta_time)
 
         pygame.display.flip()
         delta_time = clock.tick(60) / 1000
-        #delta_time = max(0.001, min(0.1, delta_time))
+        delta_time = max(0.001, min(0.1, delta_time))
         
 
 
