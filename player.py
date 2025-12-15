@@ -5,7 +5,7 @@ from main import main
 
 
 
-class Player(CircleShape):
+class Player(CircleShape, pygame. sprite. Sprite):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
@@ -25,24 +25,24 @@ class Player(CircleShape):
         pygame.draw.polygon(screen, color, points, line)
 
     def rotate(self, delta_time):
-        return (PLAYER_TURN_SPEED * delta_time) 
+        self.rotation += (PLAYER_TURN_SPEED * delta_time) 
 
     def move(self, delta_time):
         unit_vector = pygame.Vector2(0, 1)
         rotated_vector = unit_vector.rotate(self.rotation)
         rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * delta_time
-        return rotated_with_speed_vector
+        self.position += rotated_with_speed_vector
 
     def update(self, delta_time):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
-            self.rotation -= self.rotate(delta_time)
+            self.rotate(-delta_time)
 
         if keys[pygame.K_d]:
-            self.rotation += self.rotate(delta_time)
+            self.rotate(delta_time)
 
         if keys[pygame.K_w]:
-            self.position += self.move(delta_time)
+            self.move(delta_time)
         if keys[pygame.K_s]:
-            self.position -= self.move(delta_time)
+            self.move(-delta_time)
