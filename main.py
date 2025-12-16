@@ -1,11 +1,12 @@
+import sys
 import pygame
 from constants import *
 from logger import log_state, log_event
 from player import *
-from asteroid import * 
+from asteroid import *
 from asteroidfield import *
-from circleshape import CircleShape
-import sys
+from shot import Shot
+
 
 
 def main():
@@ -25,16 +26,19 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
     Player.containers = updatable, drawable
     Asteroid.containers = asteroids, updatable, drawable
     AsteroidField.containers = updatable
+    Shot.containers = shots
 
     #CREATING SCREEN SIZE
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
 
     player = Player(x, y)
-    ass_field = AsteroidField()
+    assteroids = AsteroidField()
+    
 
     #GAME LOOP START
     while running:
@@ -45,21 +49,29 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
         
         screen.fill("black")
 
+
         #ANYTHING THAT CAN UPDATE - UPDATES
         updatable.update(delta_time)
+
 
         #ANYTHING THAT CAN DRAW GETS DRAWN
         for players in drawable:
             players.draw(screen)
 
+        #SHOTS UPDATE
+        shots.update(delta_time)
+        for shot in shots:
+            shot.draw(screen)
 
-        if player.collides_with(Asteroid):
-            log_event("player_hit")
-            print("Game over!")
-            sys.exit()
+        for ass in asteroids:
+            if player.collides_with(ass):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
 
 
         #PROJECT IT TO SCREEN

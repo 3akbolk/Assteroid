@@ -1,6 +1,6 @@
 import pygame
 from circleshape import CircleShape
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH, LINE_WIDTH
+from constants import *
 
 
 class Asteroid(CircleShape, pygame.sprite.Sprite):
@@ -10,8 +10,6 @@ class Asteroid(CircleShape, pygame.sprite.Sprite):
         
 
     def draw(self, screen):
-
-        
         pygame.draw.circle(screen, "white", self.position, self.radius, LINE_WIDTH)
         
 
