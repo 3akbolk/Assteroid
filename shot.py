@@ -13,7 +13,7 @@ class Shot(CircleShape):
 
     def update(self, delta_time):
         self.position += self.velocity * delta_time
-
+        
     def collides_with(self, other):
         return super().collides_with(other)
     

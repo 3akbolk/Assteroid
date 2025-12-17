@@ -57,7 +57,6 @@ def main():
         #ANYTHING THAT CAN UPDATE - UPDATES
         updatable.update(delta_time)
 
-
         #ANYTHING THAT CAN DRAW GETS DRAWN
         for players in drawable:
             players.draw(screen)
@@ -73,6 +72,12 @@ def main():
                 print("Game over!")
                 sys.exit()
 
+        for ass in asteroids:
+            for shot in shots:
+                if shot.collides_with(ass):
+                    ass.kill()
+                    shot.kill()
+                    log_event("asteroid_shot")
 
         #PROJECT IT TO SCREEN
         pygame.display.flip()
